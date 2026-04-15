@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>待处理工单分析报告(截止时间2026-03-31)</title>
+    <title>待处理工单分析报告(2026Q1)</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         * {
@@ -65,12 +65,6 @@
             border-bottom: 3px solid #4472C4;
             display: flex;
             align-items: center;
-        }
-
-        .section-title::before {
-            content: "📊";
-            margin-right: 10px;
-            font-size: 1.5rem;
         }
 
         .data-highlight {
@@ -270,7 +264,7 @@
 </head>
 <body>
     <header>
-        <h1>待处理工单分析报告(截止时间2026-03-31)</h1>
+        <h1>待处理工单分析报告(2026Q1)</h1>
         <div class="subtitle">可视化数据分析报告 | 2026年Q1</div>
     </header>
 
@@ -416,12 +410,11 @@
 
     <section class="section">
         <h2 class="section-title">优化建议</h2>
-        <div class="recommendations">
-            <div class="recommendation-item">加强BUG修复投入：2026年BUG激增需要立即增加修复资源，以避免进一步恶化。</div>
-            <div class="recommendation-item">定期回顾需求质量：2024-2025年的功能需求可能存在隐患，建议开展代码质量评审。</div>
-            <div class="recommendation-item">建立质量监控体系：建立BUG趋势预警机制，防止质量问题继续恶化。</div>
-            <div class="recommendation-item">优化处理流程：当前有4,692条工单处于"研发中"状态，需要优化处理流程，提高处理效率。</div>
-            <div class="recommendation-item">关注重复提单问题：系统中存在60条重复提单，需要优化提单去重机制。</div>
+        <div class="recommendations" style="line-height: 36px;">
+            <div>1. 加强BUG修复投入：2026年BUG激增需要立即增加修复资源，以避免进一步恶化。</div>
+            <div>2. 定期清理产品需求：产品需求不断累积，需要形成定期清理机制。</div>
+            <div>3. 建立质量监控体系：建立BUG趋势预警机制，防止质量问题继续恶化。</div>
+            <div>4. 优化处理流程：当前有4,692条工单处于"研发中"状态，需要优化处理流程，提高处理效率。</div>
         </div>
     </section>
 

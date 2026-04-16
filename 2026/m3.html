@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3月技术支持月报</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Microsoft YaHei", "微软雅黑", "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.8;
+    color: #333;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 40px;
+    background: #fff;
+  }
+  h1 { font-size: 24px; color: #1a1a1a; border-bottom: 2px solid #e74c3c; padding-bottom: 10px; margin-top: 30px; }
+  h2 { font-size: 20px; color: #2c3e50; border-left: 4px solid #3498db; padding-left: 12px; margin-top: 25px; }
+  h3 { font-size: 17px; color: #34495e; margin-top: 20px; }
+  h4, h5, h6 { font-size: 15px; color: #555; margin-top: 15px; }
+  p { margin: 6px 0; }
+  a { color: #1155CC; }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 16px 0;
+    font-size: 13px;
+    overflow-x: auto;
+    display: block;
+  }
+  td, th {
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+    text-align: left;
+    vertical-align: top;
+    min-width: 60px;
+  }
+  tr:first-child td {
+    background-color: #f0f4f8;
+    font-weight: bold;
+  }
+  tr:nth-child(even) td {
+    background-color: #fafafa;
+  }
+  ul, ol {
+    padding-left: 24px;
+    margin: 6px 0;
+  }
+  li { margin: 3px 0; }
+  hr.page-break {
+    border: none;
+    border-top: 2px dashed #ccc;
+    margin: 30px 0;
+  }
+  img { max-width: 100%; height: auto; }
+  @media print {
+    body { max-width: 100%; padding: 20px; }
+    hr.page-break { page-break-after: always; border: none; }
+  }
+  .chart-container {
+    position: relative;
+    margin: 20px 0;
+    background: #fff;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+  .chart-title {
+    font-size: 13px;
+    color: #555;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .charts-row {
+    display: flex;
+    gap: 20px;
+    margin: 20px 0;
+  }
+  .charts-row .chart-container {
+    flex: 1;
+    margin: 0;
+    max-width: 320px;
+  }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<p style="margin-bottom: 4.0px">&nbsp;</p>
+<p style="text-align: center; margin-top: 26.7px; margin-bottom: 10.7px"><span style="font-weight: bold; font-size: 34.7px; color: #1F4E79">3月技术支持月报</span></p>
+<p style="text-align: center; margin-bottom: 26.7px"><span style="font-size: 14.7px; color: #606060">2026年3月  |  技术支持团队</span></p>
+<p style="margin-bottom: 26.7px">&nbsp;</p>
+<p style="margin-top: 18.7px; margin-bottom: 9.3px"><span style="font-weight: bold; font-size: 17.3px; color: #1F4E79">一、整体概况</span></p>
+<p style="margin-top: 6.7px; margin-bottom: 6.7px">&nbsp;</p>
+<table><tr><td style="background-color:#2E75B6;"><p style="text-align: center"><span style="font-weight: bold; font-size: 13.3px; color: #FFFFFF">总工单量</span></p></td><td style="background-color:#2E75B6;"><p style="text-align: center"><span style="font-weight: bold; font-size: 13.3px; color: #FFFFFF">4天解决率</span></p></td><td style="background-color:#2E75B6;"><p style="text-align: center"><span style="font-weight: bold; font-size: 13.3px; color: #FFFFFF">禅道Bug总数</span></p></td><td style="background-color:#2E75B6;"><p style="text-align: center"><span style="font-weight: bold; font-size: 13.3px; color: #FFFFFF">产研3天答复率</span></p></td></tr><tr><td style="background-color:#D6E4F0;"><p style="text-align: center"><span style="font-weight: bold; font-size: 24.0px; color: #1F4E79">2,107</span></p></td><td style="background-color:#D6E4F0;"><p style="text-align: center"><span style="font-weight: bold; font-size: 24.0px; color: #1F4E79">70.7%</span></p></td><td style="background-color:#D6E4F0;"><p style="text-align: center"><span style="font-weight: bold; font-size: 24.0px; color: #1F4E79">757</span></p></td><td style="background-color:#D6E4F0;"><p style="text-align: center"><span style="font-weight: bold; font-size: 24.0px; color: #1F4E79">40.8%</span></p></td></tr><tr><td style="background-color:#EBF3FB;"><p style="text-align: center"><span style="font-size: 12.0px; color: #404040">↑57.4% 环比</span></p></td><td style="background-color:#EBF3FB;"><p style="text-align: center"><span style="font-size: 12.0px; color: #404040">↑0.8%，目标92%</span></p></td><td style="background-color:#EBF3FB;"><p style="text-align: center"><span style="font-size: 12.0px; color: #404040">↑22.9%，工单转化增加</span></p></td><td style="background-color:#EBF3FB;"><p style="text-align: center"><span style="font-size: 12.0px; color: #404040">↓6.1%</span></p></td></tr><tr><td><p style="text-align: center"><span style="font-style: italic; font-size: 11.3px; color: #606060">3月开工恢复，工单量大幅提升</span></p></td><td><p style="text-align: center"><span style="font-style: italic; font-size: 11.3px; color: #606060">保持稳定，仍需持续提升</span></p></td><td><p style="text-align: center"><span style="font-style: italic; font-size: 11.3px; color: #606060">工单量增多，Bug同步增加</span></p></td><td><p style="text-align: center"><span style="font-style: italic; font-size: 11.3px; color: #606060">Bug增多，答复速度需提升</span></p></td></tr></table>
+<p style="margin-top: 6.7px; margin-bottom: 4.0px">&nbsp;</p>
+<p style="margin-top: 13.3px; margin-bottom: 6.7px"><span style="font-weight: bold; font-size: 14.7px; color: #1F4E79">本月重要问题</span></p>
+<ul><li><span style="font-size: 13.3px">智能审批提单量居首（400单，占19%）：审批模块持续高发，流程状态异常（待办与实际状态不一致）约30+单，流程提交延迟问题仍在持续优化中。</span></li><li><span style="font-size: 13.3px">智能考勤激活BUG增多（P1级别BUG 35条）：含员工转正后仍提示&quot;试用期不允许请假&quot;、打卡同步失败等问题，影响客户实际业务。</span></li><li><span style="font-size: 13.3px">轻云业务规则触发不稳定：受智能审批接口影响，轻云聚合求和数据异常、业务规则触发失败约30+单，已有排期需求。</span></li><li><span style="font-size: 13.3px">移动端iOS/Android异常（P1 BUG 18条）：附件上传预览失败、机器人推送消息收不到等问题，影响移动端体验。</span></li><li><span style="font-size: 13.3px">融合中心同步报错（115单）：星空旗舰API版配置难度高，是配置类问题主要来源，持续通过优化产品手册降低提单。</span></li></ul>
+<p><hr class="page-break"></p>
+<p style="margin-top: 18.7px; margin-bottom: 9.3px"><span style="font-weight: bold; font-size: 17.3px; color: #1F4E79">二、工单基础服务运营</span></p>
+<p style="margin-top: 13.3px; margin-bottom: 6.7px"><span style="font-weight: bold; font-size: 14.7px; color: #1F4E79">1. 工单情况</span></p>
+<div class="chart-container">
+  <div class="chart-title">月度工单量与解决率趋势（2月、3月）</div>
+  <canvas id="ticketTrendChart" height="110"></canvas>
+</div>
+<script>
+(function(){
+  var ctx = document.getElementById('ticketTrendChart').getContext('2d');
+  new Chart(ctx, {
+    data: {
+      labels: ['2月','3月'],
+      datasets: [
+        {
+          type: 'bar',
+          label: '工单量',
+          data: [1339, 2107],
+          backgroundColor: 'rgba(46,117,182,0.75)',
+          borderColor: '#2E75B6',
+          borderWidth: 1,
+          yAxisID: 'y',
+          order: 2,
+          barThickness: 28
+        },
+        {
+          type: 'line',
+          label: '4天解决率',
+          data: [69.8, 70.7],
+          borderColor: '#E74C3C',
+          backgroundColor: 'rgba(231,76,60,0.1)',
+          pointBackgroundColor: '#E74C3C',
+          pointRadius: 5,
+          tension: 0.3,
+          yAxisID: 'y1',
+          order: 1
+        },
+        {
+          type: 'line',
+          label: '直接解决率',
+          data: [56.0, 58.0],
+          borderColor: '#27AE60',
+          backgroundColor: 'rgba(39,174,96,0.1)',
+          pointBackgroundColor: '#27AE60',
+          pointRadius: 5,
+          tension: 0.3,
+          yAxisID: 'y1',
+          order: 1
+        },
+
+      ]
+    },
+    options: {
+      responsive: true,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { position: 'top', labels: { font: { size: 12 } } },
+        tooltip: {
+          callbacks: {
+            label: function(ctx) {
+              if (ctx.parsed.y === null) return null;
+              if (ctx.datasetIndex === 0) return ctx.dataset.label + ': ' + ctx.parsed.y.toLocaleString() + ' 单';
+              return ctx.dataset.label + ': ' + ctx.parsed.y + '%';
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          barPercentage: 0.1,
+          categoryPercentage: 0.2
+        },
+        y: {
+          type: 'linear',
+          position: 'left',
+          title: { display: true, text: '工单量（单）', font: { size: 11 } },
+          beginAtZero: true,
+          grid: { color: 'rgba(0,0,0,0.06)' }
+        },
+        y1: {
+          type: 'linear',
+          position: 'right',
+          title: { display: true, text: '比率（%）', font: { size: 11 } },
+          min: 0,
+          max: 100,
+          grid: { drawOnChartArea: false }
+        }
+      }
+    }
+  });
+})();
+</script>
+<p style="margin-top: 4.0px; margin-bottom: 4.0px">&nbsp;</p>
+<p style="margin-top: 4.0px; margin-bottom: 4.0px"><span style="font-size: 13.3px">说明：</span></p>
+<p style="margin-top: 4.0px; margin-bottom: 4.0px; margin-left: 24.0px"><span style="font-size: 13.3px">• 工单量：工单系统里当月产生的总工单数（按单据编号去重）</span></p>
+<p style="margin-top: 4.0px; margin-bottom: 4.0px; margin-left: 24.0px"><span style="font-size: 13.3px">• 4天解决率：4天内解决的工单数 ÷ 总工单数</span></p>
+<p style="margin-top: 4.0px; margin-bottom: 4.0px; margin-left: 24.0px"><span style="font-size: 13.3px">• 直接解决率：技术支持直接解决的工单数 ÷ 总工单数（未转禅道）</span></p>
+
+<p style="margin-top: 6.7px; margin-bottom: 4.0px">&nbsp;</p>
+<p style="margin-top: 13.3px; margin-bottom: 6.7px"><span style="font-weight: bold; font-size: 14.7px; color: #1F4E79">工单数据分析：</span></p>
+<ul><li><span style="font-size: 13.3px">工单总量：3月共2,107单，相比2月1,339单大幅增加57.4%，主要原因是节后开工复工，业务恢复正常运转，需求与Bug集中爆发。</span></li><li><span style="font-size: 13.3px">4天解决率：70.7%，环比提升0.8pct，仍距目标92%有较大差距，需继续优化处理流程。</span></li><li><span style="font-size: 13.3px">直接解决率：58.0%，环比提升2pct，超过半数工单由技术支持直接解决，无需转禅道。</span></li></ul>
+<p style="margin-top: 6.7px; margin-bottom: 4.0px">&nbsp;</p>
+<p style="margin-top: 13.3px; margin-bottom: 6.7px"><span style="font-weight: bold; font-size: 14.7px; color: #1F4E79">2. 工单问题数据概况</span></p>
+<div class="chart-container">
+  <div class="chart-title">各模块工单分布（Bug / 咨询 / 需求）</div>
+  <canvas id="moduleChart" height="200"></canvas>
+</div>
+<script>
+(function(){
+  var ctx = document.getElementById('moduleChart').getContext('2d');
+  var labels = ['其他','智能门户','平台开放API','协同审批','融合中心标准版','云之家企业版','基础平台','轻云','智能考勤','智能审批'];
+  var bugData    = [175, 20, 13, 20, 28, 28, 26, 46, 82, 82];
+  var consultData= [389, 19, 28, 61, 72, 88, 105,107,173,264];
+  var demandData = [54,   3,  2,  4, 12,  5,  0, 22, 22, 34];
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [
+        { label: 'Bug工单',  data: bugData,     backgroundColor: '#E74C3C' },
+        { label: '咨询工单', data: consultData,  backgroundColor: '#3498DB' },
+        { label: '需求工单', data: demandData,   backgroundColor: '#2ECC71' }
+      ]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      plugins: {
+        legend: { position: 'top', labels: { font: { size: 12 } } },
+        tooltip: {
+          callbacks: {
+            afterBody: function(items) {
+              var total = items.reduce(function(s,i){ return s + i.parsed.x; }, 0);
+              return '合计: ' + total + ' 单';
+            }
+          }
+        }
+      },
+      scales: {
+        x: { stacked: true, title: { display: true, text: '工单数', font: { size: 11 } }, grid: { color: 'rgba(0,0,0,0.06)' } },
+        y: { stacked: true, ticks: { font: { size: 12 } } }
+      }
+    }
+  });
+})();
+</script>
+<p style="margin-top: 4.0px; margin-bottom: 4.0px">&nbsp;</p>
+<p style="margin-top: 4.0px; margin-bottom: 4.0px"><span style="font-size: 13.3px">说明：</span></p>
+<p style="margin-top: 4.0px; margin-bottom: 4.0px; margin-left: 24.0px"><span style="font-size: 13.3px">• 咨询工单：问题类型为&quot;使用问题&quot;的工单</span></p>
+<p style="margin-top: 4.0px; margin-bottom: 4.0px; margin-left: 24.0px"><span style="font-size: 13.3px">• Bug工单：问题类型为&quot;程序BUG&quot;的工单（部分已关联禅道单号）</span></p>
+<p style="margin-top: 4.0px; margin-bottom: 4.0px; margin-left: 24.0px"><span style="font-size: 13.3px">• 需求工单：问题类型为&quot;软件需求&quot;的工单</span></p>
+<p style="margin-top: 5.3px; margin-bottom: 4.0px">&nbsp;</p>
+<ul><li><span style="font-size: 13.3px">TOP3模块为智能审批（400单/19%）、智能考勤（291单/14%）、轻云（195单/9%），合计占比42%。</span></li><li><span style="font-size: 13.3px">咨询问题集中在审批、考勤和轻云，请产研完善产品手册，制定文档更新周期，确保内容与产品迭代同步。</span></li><li><span style="font-size: 13.3px">智能审批和智能考勤的Bug工单各82单，并列最高，需优先跟进解决。</span></li></ul>
+<p><hr class="page-break"></p>
+<p style="margin-top: 18.7px; margin-bottom: 9.3px"><span style="font-weight: bold; font-size: 17.3px; color: #1F4E79">三、禅道Bug运营</span></p>
+<p style="margin-top: 13.3px; margin-bottom: 6.7px"><span style="font-weight: bold; font-size: 14.7px; color: #1F4E79">1. Bug总览</span></p>
+<p style="margin-top: 4.0px; margin-bottom: 4.0px"><span style="font-weight: bold; font-size: 13.3px">3月Bug总数：</span><span style="font-size: 13.3px">757条（↑22.9%，2月616条）</span><span style="font-weight: bold; font-size: 13.3px">    产研3天答复率：</span><span style="font-size: 13.3px">40.8%（↓6.1pct，2月46.9%）</span></p>
+<p style="margin-top: 13.3px; margin-bottom: 6.7px"><span style="font-weight: bold; font-size: 14.7px; color: #1F4E79">Bug状态分布：</span></p>
+<div class="charts-row">
+  <div class="chart-container">
+    <div class="chart-title">Bug状态分布</div>
+    <canvas id="bugStatusChart" height="50"></canvas>
+  </div>
+</div>
+<script>
+(function(){
+  // Bug状态 - 环形图
+  new Chart(document.getElementById('bugStatusChart').getContext('2d'), {
+    type: 'doughnut',
+    data: {
+      labels: ['已关闭', '已解决', '激活中'],
+      datasets: [{
+        data: [480, 103, 174],
+        backgroundColor: ['#27AE60','#3498DB','#E74C3C'],
+        borderWidth: 2,
+        borderColor: '#fff'
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { position: 'bottom', labels: { font: { size: 12 }, padding: 12 } },
+        tooltip: {
+          callbacks: {
+            label: function(c) {
+              var total = c.dataset.data.reduce(function(a,b){ return a+b; }, 0);
+              return c.label + ': ' + c.parsed + ' 条 (' + (c.parsed/total*100).toFixed(1) + '%)';
+            }
+          }
+        }
+      },
+      cutout: '55%'
+    }
+  });
+})();
+</script>
+<p style="margin-top: 5.3px; margin-bottom: 4.0px">&nbsp;</p>
+<ul><li><span style="font-size: 13.3px">已关闭占比63.4%，共480条，整体处理效率尚可。</span></li><li><span style="font-size: 13.3px">激活中Bug 174条（23.0%），需持续跟进推进解决。</span></li><li><span style="font-size: 13.3px">已解决待验证103条（13.6%），请技术支持及时验证后关闭。</span></li></ul>
+<p style="margin-top: 6.7px; margin-bottom: 4.0px">&nbsp;</p>
+<p style="margin-top: 13.3px; margin-bottom: 6.7px"><span style="font-weight: bold; font-size: 14.7px; color: #1F4E79">2. Bug产品线分布</span></p>
+<div class="chart-container">
+  <div class="chart-title">Bug产品线分布</div>
+  <canvas id="bugProductChart" height="130"></canvas>
+</div>
+<script>
+(function(){
+  new Chart(document.getElementById('bugProductChart').getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: ['数字化产品','开发支持','AI产品','行业化产品','协同办公产品','协同OA产品'],
+      datasets: [{
+        label: 'Bug数量',
+        data: [1, 24, 33, 58, 290, 341],
+        backgroundColor: [
+          '#BDC3C7','#95A5A6','#3498DB','#F39C12','#2E75B6','#E74C3C'
+        ],
+        borderRadius: 4
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: function(c) {
+              return 'Bug数量: ' + c.parsed.x + ' 条';
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          beginAtZero: true,
+          title: { display: true, text: 'Bug数量（条）', font: { size: 11 } },
+          grid: { color: 'rgba(0,0,0,0.06)' }
+        },
+        y: { ticks: { font: { size: 12 } } }
+      }
+    }
+  });
+})();
+</script>
+<p style="margin-top: 5.3px; margin-bottom: 4.0px">&nbsp;</p>
+<ul><li><span style="font-size: 13.3px">协同OA产品（341条/45%）和协同办公产品（290条/38.3%）合计占比83.3%，是Bug的主要来源。</span></li><li><span style="font-size: 13.3px">行业化产品（58条）、AI产品（33条）环比2月均有大幅增长，需关注。</span></li></ul>
+<p style="margin-top: 6.7px; margin-bottom: 4.0px">&nbsp;</p>
+<p style="margin-top: 13.3px; margin-bottom: 6.7px"><span style="font-weight: bold; font-size: 14.7px; color: #1F4E79">3. 严重程度分布</span></p>
+<p style="margin-top: 5.3px; margin-bottom: 4.0px">&nbsp;</p>
+<ul><li><span style="font-size: 13.3px">P1高优先级Bug占比72.9%（552条），需产研优先排期处理。</span></li><li><span style="font-size: 13.3px">本月产研3天答复率40.8%，较2月下降6.1pct，与Bug总量增加有关，请产研加快答复节奏。</span></li></ul>
+<p><hr class="page-break"></p>
+<p style="margin-top: 18.7px; margin-bottom: 9.3px"><span style="font-weight: bold; font-size: 17.3px; color: #1F4E79">四、业务概述以及重点问题</span></p>
+<p style="margin-top: 4.0px; margin-bottom: 4.0px"><span style="font-size: 13.3px">3月工单量TOP3为智能审批（400单，占19%）、智能考勤（291单，占14%）、轻云（195单，占9%）。</span></p>
+<p style="margin-top: 6.7px; margin-bottom: 4.0px">&nbsp;</p>
+<p style="margin-top: 13.3px; margin-bottom: 6.7px"><span style="font-weight: bold; font-size: 14.7px; color: #1F4E79">1. 融合中心</span></p>
+<p style="margin-top: 4.0px; margin-bottom: 4.0px"><span style="font-size: 13.3px">概述：</span></p>
+<p style="margin-top: 4.0px; margin-bottom: 4.0px; margin-left: 24.0px"><span style="font-size: 13.3px">融合中心3月共产生115单，整体服务较稳定。由于融合中心星空旗舰-API版持续推广，该模块配置复杂度最高，易产生配置使用问题引起客户提单，后续会通过优化产品手册减少相关提单。</span></p>
+<p style="margin-top: 4.0px; margin-bottom: 4.0px">&nbsp;</p>
+<p style="margin-top: 4.0px; margin-bottom: 4.0px"><span style="font-size: 13.3px">重点问题：</span></p>
+<ul><li><span style="font-size: 13.3px">【持续优化中】融合中心同步报错问题（约20+单）：配置类错误导致的同步失败，需优化产品手册，明确星空旗舰API版配置步骤。</span></li><li><span style="font-size: 13.3px">【已解决】融合中心员工字段同步问题：云之家表单与云星空表单完成业务连接后，员工映射数据存在偏差，现已由后端修复。</span></li></ul>
+<p style="margin-top: 6.7px; margin-bottom: 4.0px">&nbsp;</p>
+<p style="margin-top: 13.3px; margin-bottom: 6.7px"><span style="font-weight: bold; font-size: 14.7px; color: #1F4E79">2. 智能审批</span></p>
+<p style="margin-top: 4.0px; margin-bottom: 4.0px"><span style="font-size: 13.3px">概述：</span></p>
+<p style="margin-top: 4.0px; margin-bottom: 4.0px; margin-left: 24.0px"><span style="font-size: 13.3px">3月智能审批共产生400单，服务稳定性仍有待提升。流程状态异常、待办数量不一致、单据延迟等问题持续产生大量客户提单。</span></p>
+<p style="margin-top: 4.0px; margin-bottom: 4.0px">&nbsp;</p>
+<p style="margin-top: 4.0px; margin-bottom: 4.0px"><span style="font-size: 13.3px">重点问题：</span></p>
+<ul><li><span style="font-size: 13.3px">流程状态异常（30+单）（优化中）</span></li></ul>
+<p style="margin-top: 4.0px; margin-bottom: 4.0px; margin-left: 24.0px"><span style="font-size: 13.3px">原因：流程待办状态与流程状态不一致，流程待办待阅数量与流程列表数据不一致。问题原因为服务之间的RPC调用异常，服务不稳定导致。</span></p>
+<p style="margin-top: 4.0px; margin-bottom: 4.0px; margin-left: 24.0px"><span style="font-size: 13.3px">常见异常类型：①流程已完成，待办还存在；②待办数量与列表数据不一致；③获取审批人概率性失败；④流程节点状态异常。</span></p>
+<p style="margin-top: 4.0px; margin-bottom: 4.0px; margin-left: 24.0px"><span style="font-size: 13.3px">进展：已建立优化专项，持续观察优化效果，建议继续推进专项优化。</span></p>
+<ul><li><span style="font-size: 13.3px">流程提交后数据延迟：mongosync服务数据增大导致同步延迟，已通过调整阈值缓解，需持续优化。</span></li></ul>
+<p style="margin-top: 6.7px; margin-bottom: 4.0px">&nbsp;</p>
+<p style="margin-top: 13.3px; margin-bottom: 6.7px"><span style="font-weight: bold; font-size: 14.7px; color: #1F4E79">3. 智能考勤</span></p>
+<p style="margin-top: 4.0px; margin-bottom: 4.0px"><span style="font-size: 13.3px">概述：</span></p>
+<p style="margin-top: 4.0px; margin-bottom: 4.0px; margin-left: 24.0px"><span style="font-size: 13.3px">3月智能考勤工单291单，Bug数82条（P1级别35条），是本月除审批外Bug增量最多的模块。出现多个影响客户业务的关键Bug。</span></p>
+<p style="margin-top: 4.0px; margin-bottom: 4.0px">&nbsp;</p>
+<p style="margin-top: 4.0px; margin-bottom: 4.0px"><span style="font-size: 13.3px">重点问题：</span></p>
+<ul><li><span style="font-size: 13.3px">员工转正后仍提示&quot;试用期不允许请假&quot;：员工状态变更触发机制不及时，已严重影响客户使用，需排期修复。</span></li><li><span style="font-size: 13.3px">云之家同步打卡失败（多单）：打卡数据同步异常，已多次反馈，需持续跟进解决。</span></li><li><span style="font-size: 13.3px">考勤规则与业务逻辑边界问题：如假期额度未扣减、加班流程完成考勤无记录，此类问题长期存在，需从根源优化。</span></li></ul>
+<p style="margin-top: 6.7px; margin-bottom: 4.0px">&nbsp;</p>
+<p style="margin-top: 13.3px; margin-bottom: 6.7px"><span style="font-weight: bold; font-size: 14.7px; color: #1F4E79">4. 轻云</span></p>
+<p style="margin-top: 4.0px; margin-bottom: 4.0px"><span style="font-size: 13.3px">概述：</span></p>
+<p style="margin-top: 4.0px; margin-bottom: 4.0px; margin-left: 24.0px"><span style="font-size: 13.3px">3月轻云共产生195单，业务规则受智能审批接口影响，当审批接口调用不稳定时，会导致业务规则触发不稳定（30+单）。</span></p>
+<p style="margin-top: 4.0px; margin-bottom: 4.0px">&nbsp;</p>
+<p style="margin-top: 4.0px; margin-bottom: 4.0px"><span style="font-size: 13.3px">重点问题：</span></p>
+<ul><li><span style="font-size: 13.3px">【解决中】轻云聚合求和数据异常：聚合功能计算结果与实际表单数据有差异，已有客户紧急反馈，需优先排期。</span></li><li><span style="font-size: 13.3px">【排期中】业务规则触发失败，需要手动重做单据才能重新触发，影响用户体验。原因：轻云业务规则通过调用审批cloudflow-form-service，该服务异常会导致触发超时或失败。预计近期排期优化。</span></li></ul>
+<p style="margin-top: 6.7px; margin-bottom: 4.0px">&nbsp;</p>
+<p style="margin-top: 13.3px; margin-bottom: 6.7px"><span style="font-weight: bold; font-size: 14.7px; color: #1F4E79">5. 移动端客户端</span></p>
+<p style="margin-top: 4.0px; margin-bottom: 4.0px"><span style="font-size: 13.3px">概述：</span></p>
+<p style="margin-top: 4.0px; margin-bottom: 4.0px; margin-left: 24.0px"><span style="font-size: 13.3px">3月移动端（iOS/Android）P1 BUG共18条，问题集中在文件上传预览和消息推送。</span></p>
+<p style="margin-top: 4.0px; margin-bottom: 4.0px">&nbsp;</p>
+<p style="margin-top: 4.0px; margin-bottom: 4.0px"><span style="font-size: 13.3px">重点问题：</span></p>
+<ul><li><span style="font-size: 13.3px">文件上传控件在明细里：iOS端上传图片无法预览只能下载（Android可以），影响移动端表单提交体验。</span></li><li><span style="font-size: 13.3px">群消息机器人推送的消息收不到内容：消息通知缺失，已影响多个客户工作流。</span></li></ul>
+<p style="margin-top: 6.7px; margin-bottom: 4.0px">&nbsp;</p>
+<p style="margin-top: 13.3px; margin-bottom: 6.7px"><span style="font-weight: bold; font-size: 14.7px; color: #1F4E79">6. 知识中心（AI产品）</span></p>
+<p style="margin-top: 4.0px; margin-bottom: 4.0px"><span style="font-size: 13.3px">概述：</span></p>
+<p style="margin-top: 4.0px; margin-bottom: 4.0px; margin-left: 24.0px"><span style="font-size: 13.3px">3月AI产品（含知识中心）共33条Bug，P1 BUG 8条，较2月明显增加，随着AI知识中心推广范围扩大，问题暴露也在增多。</span></p>
+<p style="margin-top: 4.0px; margin-bottom: 4.0px">&nbsp;</p>
+<p style="margin-top: 4.0px; margin-bottom: 4.0px"><span style="font-size: 13.3px">重点问题：</span></p>
+<ul><li><span style="font-size: 13.3px">知识中心发布文档设置全员可见，但用户主页看不到发布文档：权限生效机制存在延迟或缺陷，已影响客户使用。</span></li><li><span style="font-size: 13.3px">批量下载文档不全（已上传文档在下载包里缺少内容）：数据完整性问题，已有客户反馈，需排期修复。</span></li></ul>
+<p style="margin-top: 8.0px; margin-bottom: 8.0px">&nbsp;</p>
+<p style="margin-top: 8.0px; margin-bottom: 4.0px">&nbsp;</p>
+<p style="text-align: center"><span style="font-style: italic; font-size: 12.0px; color: #808080">对上述内容有疑问请联系：技术支持团队负责人</span></p>
+</body>
+</html>

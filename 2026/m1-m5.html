@@ -248,8 +248,8 @@
 
   <!-- 1. 工单数量 + 构成趋势 -->
   <div class="chart-card">
-    <h2>工单数量月度趋势</h2>
-    <p class="subtitle">工单系统按月提单量 &amp; 当月未解决（需求+Bug）总数</p>
+    <h2>工单月度趋势</h2>
+    <p class="subtitle">工单系统按月提单量 &amp; 当月未解决（需求+Bug）总数 &amp; 解决率</p>
     <div class="chart-wrap">
       <canvas id="ticketChart"></canvas>
     </div>
@@ -257,7 +257,7 @@
 
   <!-- 2. 需求总数趋势 -->
   <div class="chart-card">
-    <h2>需求总数月度趋势</h2>
+    <h2>需求月度趋势</h2>
     <p class="subtitle">当月新增需求数 &amp; 截止当月月底未解决需求数</p>
     <div class="chart-wrap">
       <canvas id="reqChart"></canvas>
@@ -266,7 +266,7 @@
 
   <!-- 3. 工单系统Bug总数趋势 -->
   <div class="chart-card">
-    <h2>工单系统 Bug 总数月度趋势</h2>
+    <h2>工单系统 Bug 月度趋势</h2>
     <p class="subtitle">工单系统中问题类型为"程序BUG"的月度提单量 &amp; 当月未解决（研发中）Bug数</p>
     <div class="chart-wrap">
       <canvas id="workorderBugChart"></canvas>
@@ -275,7 +275,7 @@
 
   <!-- 4. Bug总数趋势 -->
   <div class="chart-card">
-    <h2>禅道 Bug 总数月度趋势</h2>
+    <h2>禅道 Bug 月度趋势</h2>
     <p class="subtitle">当月新增Bug数 &amp; 截止当月月底未解决Bug数</p>
     <div class="chart-wrap">
       <canvas id="bugChart"></canvas>
@@ -345,46 +345,73 @@ Chart.register({
 
 // ── 1. 工单数量趋势 ──
 new Chart(document.getElementById('ticketChart'), {
-  type: 'bar',
   data: {
     labels: LABELS,
-    datasets: [{
-      label: '工单总数',
-      data: [2266, 1336, 2100, 2181, 2108],
-      backgroundColor: 'rgba(59,130,246,0.75)',
-      borderColor: '#3b82f6',
-      borderWidth: 1,
-      borderRadius: 4,
-      barThickness: 48,
-    },
-    {
-      label: '未解决总数',
-      data: [206, 177, 272, 294, 266],
-      backgroundColor: 'rgba(147,197,253,0.75)',
-      borderColor: '#93c5fd',
-      borderWidth: 1,
-      borderRadius: 4,
-      barThickness: 48,
-      labelColor: '#2563eb'
-    }]
+    datasets: [
+      {
+        type: 'bar',
+        label: '工单总数',
+        data: [2266, 1336, 2100, 2181, 2108],
+        backgroundColor: 'rgba(59,130,246,0.75)',
+        borderColor: '#3b82f6',
+        borderWidth: 1,
+        borderRadius: 4,
+        barThickness: 48,
+        yAxisID: 'y'
+      },
+      {
+        type: 'bar',
+        label: '未解决总数',
+        data: [206, 177, 272, 294, 266],
+        backgroundColor: 'rgba(147,197,253,0.75)',
+        borderColor: '#93c5fd',
+        borderWidth: 1,
+        borderRadius: 4,
+        barThickness: 48,
+        yAxisID: 'y',
+        labelColor: '#2563eb'
+      },
+      {
+        type: 'line',
+        label: '解决率',
+        data: [90.9, 86.8, 87.0, 86.5, 87.4],
+        borderColor: '#10b981',
+        backgroundColor: 'rgba(16,185,129,0.08)',
+        borderWidth: 2.5,
+        pointRadius: 5,
+        pointBackgroundColor: '#10b981',
+        tension: 0.35,
+        yAxisID: 'y1',
+        labelFormat: 'percent',
+        labelColor: '#059669'
+      }
+    ]
   },
   options: {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
       legend: { position: 'top', labels: { font: FONT, boxWidth: 12, padding: 14 } },
-      tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y.toLocaleString()}` } }
+      tooltip: { callbacks: { label: ctx => {
+        if (ctx.dataset.labelFormat === 'percent') return ` ${ctx.dataset.label}: ${ctx.parsed.y}%`;
+        return ` ${ctx.dataset.label}: ${ctx.parsed.y.toLocaleString()}`;
+      }}}
     },
     scales: {
-      x: {
-        grid: { color: GRID_COLOR },
-        ticks: { font: FONT }
-      },
+      x: { grid: { color: GRID_COLOR }, ticks: { font: FONT } },
       y: {
         min: 0,
+        position: 'left',
         grid: { color: GRID_COLOR },
         ticks: { font: FONT, callback: v => v.toLocaleString() },
         title: { display: true, text: '工单数', font: FONT, color: '#9aa5b1' }
+      },
+      y1: {
+        min: 70, max: 100,
+        position: 'right',
+        grid: { drawOnChartArea: false },
+        ticks: { font: FONT, callback: v => v + '%' },
+        title: { display: true, text: '解决率', font: FONT, color: '#9aa5b1' }
       }
     }
   }

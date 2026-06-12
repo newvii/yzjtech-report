@@ -93,20 +93,6 @@
     line-height: 1.9;
   }
 
-  /* ── 报告总结 ── */
-  .summary-content { display: flex; flex-direction: column; gap: 16px; margin-top: 14px; }
-  .summary-item { display: flex; gap: 14px; align-items: flex-start; }
-  .summary-icon {
-    width: 28px; height: 28px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 14px; font-weight: 700; flex-shrink: 0;
-    color: #fff;
-  }
-  .summary-icon.good { background: #10b981; }
-  .summary-icon.warn { background: #f59e0b; }
-  .summary-icon.info { background: #3b82f6; }
-  .summary-text strong { font-size: 14px; color: #1e293b; display: block; margin-bottom: 4px; }
-  .summary-text p { margin: 0; font-size: 13px; color: #64748b; line-height: 1.7; }
   .footnote .note {
     margin-top: 14px;
     padding: 10px 14px;
@@ -324,47 +310,6 @@
     </div>
   </div>
 
-  <!-- 8. 总结 -->
-  <div class="chart-card">
-    <h2>报告总结</h2>
-    <div class="summary-content">
-      <div class="summary-item">
-        <div class="summary-icon good">✓</div>
-        <div class="summary-text">
-          <strong>工单系统运行稳定</strong>
-          <p>M1–M5 工单月解决率维持在 86.5%–90.9%，4天解决率从 65.4% 持续提升至 81.7%，服务效率稳步改善。2月工单量最低（1336）但各项指标均保持高位，系统整体承压能力良好。</p>
-        </div>
-      </div>
-      <div class="summary-item">
-        <div class="summary-icon warn">!</div>
-        <div class="summary-text">
-          <strong>需求积压问题加剧</strong>
-          <p>新增需求解决率从 M1 的 21.1% 逐月下滑至 M5 的 0.8%，几乎停滞。截至5月底，产研侧未解决需求累计达 4,136 个（含往年积压），需求消化能力严重不足，需重点关注。</p>
-        </div>
-      </div>
-      <div class="summary-item">
-        <div class="summary-icon warn">!</div>
-        <div class="summary-text">
-          <strong>工单 Bug 需及时关单</strong>
-          <p>工单系统中"研发中"Bug 从 M1 的 122 个增至 M5 的 152 个，解决率从 85.3% 降至 72.6%。工单未解决 Bug 数（152）高于禅道未解决 Bug 数（145），原因在于工单系统中部分 Bug 处理后未及时关单同步至禅道，导致工单侧 Bug 持续积压。应用支持人员需在 Bug 处理完成后及时关单，确保两个系统数据一致。</p>
-        </div>
-      </div>
-      <div class="summary-item">
-        <div class="summary-icon info">i</div>
-        <div class="summary-text">
-          <strong>Bug 解决效率有提升空间</strong>
-          <p>禅道 Bug 解决率维持在 80.4%–91.2%，但4天解决率仅 45.6%–66.0%，半数以上 Bug 无法在4天内关闭，建议优化 Bug 处理流程。</p>
-        </div>
-      </div>
-      <div class="summary-item">
-        <div class="summary-icon warn">!</div>
-        <div class="summary-text">
-          <strong>产研响应及时性偏低</strong>
-          <p>产研3天答复率在 40.8%–48.2% 之间波动，持续低于 50%，超过半数的 Bug 无法在3天内获得首次答复，需改善产研侧响应机制。</p>
-        </div>
-      </div>
-    </div>
-  </div>
 
 </div>
 

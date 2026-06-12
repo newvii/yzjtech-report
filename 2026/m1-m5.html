@@ -163,7 +163,6 @@
   .backlog-table tbody td:first-child {
     font-weight: 600; color: #1e293b;
     vertical-align: middle;
-    background: #f8fafc;
   }
   .backlog-table tbody td:first-child .cell-inner {
     display: inline-flex; align-items: center; gap: 8px;
@@ -189,10 +188,9 @@
   .backlog-table .pct-val { font-weight: 600; min-width: 36px; text-align: right; }
   .backlog-table tfoot td {
     padding: 14px 16px;
-    background: linear-gradient(135deg, #eff6ff 0%, #f0f4ff 100%);
     font-weight: 700; color: #0f172a;
     border-radius: 0 0 8px 8px;
-    border-top: 2px solid #bfdbfe;
+    border-top: 1px solid #f1f5f9;
     text-align: center;
   }
 </style>
@@ -210,28 +208,28 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="cell-inner"><span class="year-badge" style="background:linear-gradient(135deg,#94a3b8,#64748b)">23</span> 2023</span></td>
+        <td><span class="cell-inner"><span class="year-badge" style="background:linear-gradient(135deg,#94a3b8,#64748b)">23</span></span></td>
         <td class="num">0</td>
         <td class="num">485</td>
         <td class="num strong">485</td>
         <td class="pct"><span class="pct-val">10%</span></td>
       </tr>
       <tr>
-        <td><span class="cell-inner"><span class="year-badge" style="background:linear-gradient(135deg,#f59e0b,#d97706)">24</span> 2024</span></td>
+        <td><span class="cell-inner"><span class="year-badge" style="background:linear-gradient(135deg,#f59e0b,#d97706)">24</span></span></td>
         <td class="num">8</td>
         <td class="num">1,424</td>
         <td class="num strong">1,432</td>
         <td class="pct"><span class="pct-val">28%</span></td>
       </tr>
       <tr>
-        <td><span class="cell-inner"><span class="year-badge" style="background:linear-gradient(135deg,#ef4444,#dc2626)">25</span> 2025</span></td>
+        <td><span class="cell-inner"><span class="year-badge" style="background:linear-gradient(135deg,#ef4444,#dc2626)">25</span></span></td>
         <td class="num">312</td>
         <td class="num">1,612</td>
         <td class="num strong">1,924</td>
         <td class="pct"><span class="pct-val">38%</span></td>
       </tr>
       <tr>
-        <td><span class="cell-inner"><span class="year-badge" style="background:linear-gradient(135deg,#3b82f6,#2563eb)">26</span> 2026</span></td>
+        <td><span class="cell-inner"><span class="year-badge" style="background:linear-gradient(135deg,#3b82f6,#2563eb)">26</span></span></td>
         <td class="num">598</td>
         <td class="num">615</td>
         <td class="num strong">1,213</td>
@@ -305,9 +303,6 @@
   <h3>📌 指标口径说明</h3>
   <div class="grid-2">
     <div><b>工单总数</b>：工单系统按月提单（按单据编号）</div>
-    <div><b>使用问题</b>：问题类型为"使用问题"的工单</div>
-    <div><b>程序BUG</b>：问题类型为"程序BUG"的工单（来自工单系统，非禅道）</div>
-    <div><b>软件需求</b>：问题类型为"软件需求"的工单</div>
     <div><b>禅道Bug总数</b>：禅道按创建日期统计的当月新增Bug数</div>
     <div><b>4天解决率</b>：提单→关闭 ≤ 96小时的工单数 ÷ 工单总数</div>
     <div><b>产研3天答复率</b>：答复日期−指派日期 ≤ 3天 ÷ 当月Bug总数</div>

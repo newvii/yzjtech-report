@@ -32,7 +32,7 @@
   /* ── 图表网格 ── */
   .charts-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 24px;
     max-width: 1200px;
     margin: 0 auto;
@@ -42,9 +42,6 @@
     border-radius: 12px;
     box-shadow: 0 2px 12px rgba(0,0,0,0.07);
     padding: 24px 20px 20px;
-  }
-  .chart-card.full-width {
-    grid-column: 1 / -1;
   }
   .chart-card h2 {
     font-size: 15px;
@@ -107,8 +104,6 @@
   }
 
   @media (max-width: 768px) {
-    .charts-grid { grid-template-columns: 1fr; }
-    .chart-card.full-width { grid-column: auto; }
     .summary-row { flex-wrap: wrap; }
     .summary-card { min-width: 45%; }
     .footnote .grid-2 { grid-template-columns: 1fr; }
@@ -252,7 +247,7 @@
 <div class="charts-grid">
 
   <!-- 1. 工单数量 + 构成趋势 -->
-  <div class="chart-card full-width">
+  <div class="chart-card">
     <h2>工单数量月度趋势 <span class="badge">M1–M5</span></h2>
     <p class="subtitle">工单系统按月提单量</p>
     <div class="chart-wrap">
@@ -263,7 +258,7 @@
   <!-- 2. 需求总数趋势 -->
   <div class="chart-card">
     <h2>需求总数月度趋势 <span class="badge">软件需求类</span></h2>
-    <p class="subtitle">工单系统中问题类型为"软件需求"的月度工单量</p>
+    <p class="subtitle">当月新增需求数 &amp; 截止当月月底未解决需求数</p>
     <div class="chart-wrap">
       <canvas id="reqChart"></canvas>
     </div>
@@ -272,7 +267,7 @@
   <!-- 3. Bug总数趋势 -->
   <div class="chart-card">
     <h2>禅道 Bug 总数月度趋势 <span class="badge">M1–M5</span></h2>
-    <p class="subtitle">禅道中按创建日期统计的当月新增Bug数</p>
+    <p class="subtitle">当月新增Bug数 &amp; 截止当月月底未解决Bug数</p>
     <div class="chart-wrap">
       <canvas id="bugChart"></canvas>
     </div>
@@ -290,7 +285,7 @@
   <!-- 5. 产研3天答复率 -->
   <div class="chart-card">
     <h2>产研 3天答复率月度趋势</h2>
-    <p class="subtitle">指派日期 − 创建日期 ≤ 3天的Bug数 ÷ 当月Bug总数</p>
+    <p class="subtitle">答复日期 − 创建日期 ≤ 3天的Bug数 ÷ 当月Bug总数</p>
     <div class="chart-wrap">
       <canvas id="replyRateChart"></canvas>
     </div>
@@ -302,6 +297,33 @@
 const LABELS = ['1月', '2月', '3月', '4月', '5月'];
 const FONT = { family: "'PingFang SC','Microsoft YaHei',sans-serif", size: 12 };
 const GRID_COLOR = 'rgba(0,0,0,0.06)';
+
+// ── 内置数据标签插件 ──
+Chart.register({
+  id: 'valueLabels',
+  afterDatasetsDraw(chart) {
+    const ctx = chart.ctx;
+    chart.data.datasets.forEach((ds, i) => {
+      // 跳过隐藏或设置了 skipLabels 的数据集
+      if (ds.skipLabels) return;
+      const meta = chart.getDatasetMeta(i);
+      if (meta.hidden) return;
+      meta.data.forEach((el, j) => {
+        const val = ds.data[j];
+        if (val == null) return;
+        let label = val.toLocaleString();
+        if (ds.labelFormat === 'percent') label = val + '%';
+        ctx.save();
+        ctx.font = "600 12px 'PingFang SC','Microsoft YaHei',sans-serif";
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'bottom';
+        ctx.fillStyle = ds.labelColor || '#1e293b';
+        ctx.fillText(label, el.x, el.y - 6);
+        ctx.restore();
+      });
+    });
+  }
+});
 
 // ── 1. 工单数量趋势 ──
 new Chart(document.getElementById('ticketChart'), {
@@ -345,22 +367,34 @@ new Chart(document.getElementById('reqChart'), {
   type: 'bar',
   data: {
     labels: LABELS,
-    datasets: [{
-      label: '软件需求工单数',
-      data: [171, 69, 157, 160, 122],
-      backgroundColor: 'rgba(139,92,246,0.75)',
-      borderColor: '#8b5cf6',
-      borderWidth: 1,
-      borderRadius: 4,
-      barThickness: 44,
-    }]
+    datasets: [
+      {
+        label: '需求总数',
+        data: [171, 69, 157, 160, 122],
+        backgroundColor: 'rgba(139,92,246,0.75)',
+        borderColor: '#8b5cf6',
+        borderWidth: 1,
+        borderRadius: 4,
+        barThickness: 48,
+      },
+      {
+        label: '未解决需求',
+        data: [135, 60, 144, 156, 121],
+        backgroundColor: 'rgba(196,167,255,0.75)',
+        borderColor: '#c4a7ff',
+        borderWidth: 1,
+        borderRadius: 4,
+        barThickness: 48,
+        labelColor: '#7c3aed'
+      }
+    ]
   },
   options: {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      legend: { display: false },
-      tooltip: { callbacks: { label: ctx => ` 需求数: ${ctx.parsed.y}` } }
+      legend: { position: 'top', labels: { font: FONT, boxWidth: 12, padding: 14 } },
+      tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y}` } }
     },
     scales: {
       x: { grid: { color: GRID_COLOR }, ticks: { font: FONT } },
@@ -376,31 +410,28 @@ new Chart(document.getElementById('reqChart'), {
 
 // ── 3. Bug总数趋势 ──
 new Chart(document.getElementById('bugChart'), {
+  type: 'bar',
   data: {
     labels: LABELS,
     datasets: [
       {
-        type: 'bar',
         label: 'Bug总数',
         data: [810, 616, 757, 778, 741],
         backgroundColor: 'rgba(239,68,68,0.7)',
         borderColor: '#ef4444',
         borderWidth: 1,
         borderRadius: 4,
-        barThickness: 44,
-        yAxisID: 'y'
+        barThickness: 48,
       },
       {
-        type: 'line',
-        label: '已关闭Bug',
-        data: [666, 456, 547, 534, 499],
-        borderColor: '#10b981',
-        backgroundColor: 'rgba(16,185,129,0.1)',
-        borderWidth: 2,
-        pointRadius: 4,
-        pointBackgroundColor: '#10b981',
-        tension: 0.3,
-        yAxisID: 'y'
+        label: '未解决Bug',
+        data: [71, 117, 128, 138, 145],
+        backgroundColor: 'rgba(252,165,165,0.75)',
+        borderColor: '#fca5a5',
+        borderWidth: 1,
+        borderRadius: 4,
+        barThickness: 48,
+        labelColor: '#dc2626'
       }
     ]
   },
@@ -438,16 +469,9 @@ new Chart(document.getElementById('rate4dChart'), {
         pointRadius: 5,
         pointBackgroundColor: '#3b82f6',
         tension: 0.35,
-        fill: true
-      },
-      {
-        label: '目标线 92%',
-        data: [92, 92, 92, 92, 92],
-        borderColor: '#f43f5e',
-        borderWidth: 1.5,
-        borderDash: [6, 4],
-        pointRadius: 0,
-        tension: 0
+        fill: true,
+        labelFormat: 'percent',
+        labelColor: '#2563eb'
       }
     ]
   },
@@ -455,7 +479,7 @@ new Chart(document.getElementById('rate4dChart'), {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      legend: { position: 'top', labels: { font: FONT, boxWidth: 12, padding: 14 } },
+      legend: { display: false },
       tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y}%` } }
     },
     scales: {
@@ -485,16 +509,9 @@ new Chart(document.getElementById('replyRateChart'), {
         pointRadius: 5,
         pointBackgroundColor: '#8b5cf6',
         tension: 0.35,
-        fill: true
-      },
-      {
-        label: '参考基准 48%（10月）',
-        data: [48, 48, 48, 48, 48],
-        borderColor: '#94a3b8',
-        borderWidth: 1.5,
-        borderDash: [5, 4],
-        pointRadius: 0,
-        tension: 0
+        fill: true,
+        labelFormat: 'percent',
+        labelColor: '#7c3aed'
       }
     ]
   },
@@ -502,7 +519,7 @@ new Chart(document.getElementById('replyRateChart'), {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      legend: { position: 'top', labels: { font: FONT, boxWidth: 12, padding: 14 } },
+      legend: { display: false },
       tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y}%` } }
     },
     scales: {

@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026年 H1 技术支持数据分析报告</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'PingFang SC','Microsoft YaHei',sans-serif;
+    background: #f0f4f8;
+    color: #1e293b;
+    padding: 40px 24px;
+    min-height: 100vh;
+  }
+  .page-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #1a2e5a;
+    margin-bottom: 8px;
+    text-align: center;
+    letter-spacing: 1px;
+  }
+  .report-subtitle {
+    text-align: center;
+    font-size: 14px;
+    color: #7f8c9a;
+    margin-bottom: 32px;
+  }
+  .subtitle {
+    font-size: 12px;
+    color: #9aa5b1;
+    margin: 0 0 6px;
+  }
+  .chart-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    padding: 24px 20px 20px;
+    margin-bottom: 24px;
+  }
+  .chart-card h2 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a2e5a;
+    margin-bottom: 6px;
+  }
+  .chart-wrap {
+    position: relative;
+    height: 320px;
+  }
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    color: #3b82f6;
+    background: #eff6ff;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-left: 6px;
+  }
+  .charts-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    max-width: 1200px;
+  }
+
+  /* ── Backlog table ── */
+  .backlog-table-wrap {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    padding: 24px 20px 20px;
+    margin-bottom: 24px;
+  }
+  .backlog-table-wrap h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a2e5a;
+    margin: 0 0 6px;
+  }
+  .backlog-table-wrap .subtitle {
+    font-size: 12px;
+    color: #9aa5b1;
+    margin: 0 0 18px;
+  }
+  .backlog-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 13px; table-layout: fixed; }
+  .backlog-table thead th {
+    width: 20%;
+    padding: 12px 16px;
+    background: #f0f4ff;
+    color: #475569;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .3px;
+    border-bottom: 2px solid #dbeafe;
+    text-align: center;
+  }
+  .backlog-table thead th:first-child { border-radius: 8px 0 0 0; }
+  .backlog-table thead th:last-child  { border-radius: 0 8px 0 0; }
+  .backlog-table tbody td {
+    padding: 14px 16px;
+    color: #334155;
+    border-bottom: 1px solid #f1f5f9;
+    text-align: center;
+  }
+  .backlog-table tbody tr:hover td { background: #fafbff; }
+  .backlog-table tbody td:first-child {
+    font-weight: 600; color: #1e293b;
+    vertical-align: middle;
+  }
+  .backlog-table tbody td:first-child .cell-inner {
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .year-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 32px; height: 32px; border-radius: 8px;
+    font-size: 12px; font-weight: 700; color: #fff; flex-shrink: 0;
+  }
+  .backlog-table .num { text-align: center; font-variant-numeric: tabular-nums; }
+  .backlog-table .num.strong { font-weight: 700; color: #0f172a; }
+  .backlog-table .pct { text-align: center; }
+  .backlog-table .pct-val { font-weight: 600; }
+  .backlog-table tfoot td {
+    padding: 14px 16px;
+    font-weight: 700; color: #0f172a;
+    border-radius: 0 0 8px 8px;
+    border-top: 1px solid #f1f5f9;
+    text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    .chart-wrap { height: 260px; }
+    .backlog-table th, .backlog-table td { font-size: 11px; padding: 6px 4px; }
+  }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+  <h1>2026年 H1 技术支持数据分析报告</h1>
+  <p class="report-subtitle">数据来源：工单系统 + 禅道 Bug 平台 &nbsp;|&nbsp; 统计截止：2026年6月30日</p>
+
+  <!-- 禅道未解决bug和需求数表格 -->
+  <div class="backlog-table-wrap">
+    <h3>禅道未解决的 Bug 和需求数</h3>
+    <p class="subtitle">截止2026年6月30日</p>
+    <table class="backlog-table">
+      <thead>
+        <tr>
+          <th>年度</th>
+          <th class="num">程序 BUG</th>
+          <th class="num">软件需求</th>
+          <th class="num">合计</th>
+          <th class="pct">年度占比</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="cell-inner"><span class="year-badge" style="background:linear-gradient(135deg,#94a3b8,#64748b)">23</span></span></td>
+          <td class="num">0</td>
+          <td class="num">483</td>
+          <td class="num strong">483</td>
+          <td class="pct"><span class="pct-val">9.3%</span></td>
+        </tr>
+        <tr>
+          <td><span class="cell-inner"><span class="year-badge" style="background:linear-gradient(135deg,#f59e0b,#d97706)">24</span></span></td>
+          <td class="num">6</td>
+          <td class="num">1,426</td>
+          <td class="num strong">1,432</td>
+          <td class="pct"><span class="pct-val">27.6%</span></td>
+        </tr>
+        <tr>
+          <td><span class="cell-inner"><span class="year-badge" style="background:linear-gradient(135deg,#ef4444,#dc2626)">25</span></span></td>
+          <td class="num">254</td>
+          <td class="num">1,609</td>
+          <td class="num strong">1,863</td>
+          <td class="pct"><span class="pct-val">35.8%</span></td>
+        </tr>
+        <tr>
+          <td><span class="cell-inner"><span class="year-badge" style="background:linear-gradient(135deg,#3b82f6,#2563eb)">26</span></span></td>
+          <td class="num">644</td>
+          <td class="num">773</td>
+          <td class="num strong">1,417</td>
+          <td class="pct"><span class="pct-val">27.3%</span></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td>总计</td>
+          <td class="num">904</td>
+          <td class="num">4,291</td>
+          <td class="num">5,195</td>
+          <td class="pct"><span class="pct-val">100%</span></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="charts-grid">
+  <!-- 1. 工单月度趋势 -->
+  <div class="chart-card">
+    <h2>工单月度趋势</h2>
+    <p class="subtitle">工单系统按月提单量 &amp; 当月未解决（需求+Bug）总数 &amp; 解决率</p>
+    <div class="chart-wrap">
+      <canvas id="ticketChart"></canvas>
+    </div>
+  </div>
+
+  <!-- 2. 需求月度趋势 -->
+  <div class="chart-card">
+    <h2>需求月度趋势</h2>
+    <p class="subtitle">当月新增需求数 &amp; 当月未解决需求数 &amp; 解决率</p>
+    <div class="chart-wrap">
+      <canvas id="reqChart"></canvas>
+    </div>
+  </div>
+
+  <!-- 3. 工单系统Bug月度趋势 -->
+  <div class="chart-card">
+    <h2>工单系统 Bug 月度趋势</h2>
+    <p class="subtitle">当月新增Bug数 &amp; 未解决（研发中）Bug数 &amp; 解决率</p>
+    <div class="chart-wrap">
+      <canvas id="workorderBugChart"></canvas>
+    </div>
+  </div>
+
+  <!-- 4. 禅道Bug月度趋势 -->
+  <div class="chart-card">
+    <h2>禅道 Bug 月度趋势</h2>
+    <p class="subtitle">当月新增Bug数 &amp; 当月未解决Bug数 &amp; 解决率</p>
+    <div class="chart-wrap">
+      <canvas id="bugChart"></canvas>
+    </div>
+  </div>
+
+  <!-- 5. 工单系统4天解决率 -->
+  <div class="chart-card">
+    <h2>工单系统4天解决率月度趋势</h2>
+    <p class="subtitle">4天(96h)内解决工单数 ÷ 当月工单总数</p>
+    <div class="chart-wrap">
+      <canvas id="rate4dChart"></canvas>
+    </div>
+  </div>
+
+  <!-- 6. 禅道Bug 4天解决率 -->
+  <div class="chart-card">
+    <h2>禅道 Bug 4天解决率月度趋势</h2>
+    <p class="subtitle">创建→解决/关闭≤4天的Bug数 ÷ 当月Bug总数</p>
+    <div class="chart-wrap">
+      <canvas id="bugRate4dChart"></canvas>
+    </div>
+  </div>
+
+  <!-- 7. 产研3天答复率 -->
+  <div class="chart-card">
+    <h2>产研 3天答复率月度趋势</h2>
+    <p class="subtitle">答复日期 − 创建日期 ≤ 3天的Bug数 ÷ 当月Bug总数</p>
+    <div class="chart-wrap">
+      <canvas id="reply3dChart"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+const LABELS = ['1月', '2月', '3月', '4月', '5月', '6月'];
+const FONT = { family: "'PingFang SC','Microsoft YaHei',sans-serif", size: 12 };
+const GRID_COLOR = 'rgba(0,0,0,0.06)';
+
+// ── 内置数据标签插件 ──
+Chart.register({
+  id: 'valueLabels',
+  afterDatasetsDraw(chart) {
+    const ctx = chart.ctx;
+    chart.data.datasets.forEach((ds, di) => {
+      const meta = chart.getDatasetMeta(di);
+      if (meta.hidden) return;
+      const isPercent = ds.labelFormat === 'percent';
+      const color = ds.labelColor || '#334155';
+      meta.data.forEach((el, idx) => {
+        const val = ds.data[idx];
+        if (val === null || val === undefined) return;
+        ctx.save();
+        ctx.font = `bold 11px ${FONT.family}`;
+        ctx.fillStyle = color;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'bottom';
+        const text = isPercent ? val + '%' : val.toLocaleString();
+        let yPos = el.y - 8;
+        if (ds.type === 'line') yPos = el.y - 12;
+        ctx.fillText(text, el.x, yPos);
+        ctx.restore();
+      });
+    });
+  }
+});
+
+// ── 1. 工单月度趋势 ──
+new Chart(document.getElementById('ticketChart'), {
+  data: {
+    labels: LABELS,
+    datasets: [
+      {
+        type: 'bar',
+        label: '工单总数',
+        data: [2264, 1335, 2099, 2178, 2105, 1994],
+        backgroundColor: 'rgba(59,130,246,0.75)',
+        borderColor: '#3b82f6',
+        borderWidth: 1,
+        borderRadius: 4,
+        barThickness: 48,
+        yAxisID: 'y'
+      },
+      {
+        type: 'bar',
+        label: '未解决总数',
+        data: [229, 100, 227, 249, 220, 328],
+        backgroundColor: 'rgba(147,197,253,0.75)',
+        borderColor: '#93c5fd',
+        borderWidth: 1,
+        borderRadius: 4,
+        barThickness: 48,
+        yAxisID: 'y',
+        labelColor: '#2563eb'
+      },
+      {
+        type: 'line',
+        label: '解决率',
+        data: [89.9, 92.5, 89.2, 88.6, 89.5, 83.6],
+        borderColor: '#10b981',
+        backgroundColor: 'rgba(16,185,129,0.08)',
+        borderWidth: 2.5,
+        pointRadius: 5,
+        pointBackgroundColor: '#10b981',
+        tension: 0.35,
+        yAxisID: 'y1',
+        labelFormat: 'percent',
+        labelColor: '#059669'
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'top', labels: { font: FONT, boxWidth: 12, padding: 14 } },
+      tooltip: { callbacks: { label: ctx => {
+        if (ctx.dataset.labelFormat === 'percent') return ` ${ctx.dataset.label}: ${ctx.parsed.y}%`;
+        return ` ${ctx.dataset.label}: ${ctx.parsed.y.toLocaleString()}`;
+      }}}
+    },
+    scales: {
+      x: { grid: { color: GRID_COLOR }, ticks: { font: FONT } },
+      y: {
+        min: 0,
+        position: 'left',
+        grid: { color: GRID_COLOR },
+        ticks: { font: FONT, callback: v => v.toLocaleString() },
+        title: { display: true, text: '工单数', font: FONT, color: '#9aa5b1' }
+      },
+      y1: {
+        min: 70, max: 100,
+        position: 'right',
+        grid: { drawOnChartArea: false },
+        ticks: { font: FONT, callback: v => v + '%' },
+        title: { display: true, text: '解决率', font: FONT, color: '#9aa5b1' }
+      }
+    }
+  }
+});
+
+// ── 2. 需求月度趋势 ──
+new Chart(document.getElementById('reqChart'), {
+  data: {
+    labels: LABELS,
+    datasets: [
+      {
+        type: 'bar',
+        label: '需求总数',
+        data: [171, 69, 157, 159, 122, 149],
+        backgroundColor: 'rgba(139,92,246,0.75)',
+        borderColor: '#8b5cf6',
+        borderWidth: 1,
+        borderRadius: 4,
+        barThickness: 48,
+        yAxisID: 'y'
+      },
+      {
+        type: 'bar',
+        label: '未解决需求',
+        data: [134, 60, 139, 153, 119, 138],
+        backgroundColor: 'rgba(196,167,255,0.75)',
+        borderColor: '#c4a7ff',
+        borderWidth: 1,
+        borderRadius: 4,
+        barThickness: 48,
+        yAxisID: 'y',
+        labelColor: '#7c3aed'
+      },
+      {
+        type: 'line',
+        label: '解决率',
+        data: [21.6, 13.0, 11.5, 3.8, 2.5, 7.4],
+        borderColor: '#10b981',
+        backgroundColor: 'rgba(16,185,129,0.08)',
+        borderWidth: 2.5,
+        pointRadius: 5,
+        pointBackgroundColor: '#10b981',
+        tension: 0.35,
+        yAxisID: 'y1',
+        labelFormat: 'percent',
+        labelColor: '#059669'
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'top', labels: { font: FONT, boxWidth: 12, padding: 14 } },
+      tooltip: { callbacks: { label: ctx => {
+        if (ctx.dataset.labelFormat === 'percent') return ` ${ctx.dataset.label}: ${ctx.parsed.y}%`;
+        return ` ${ctx.dataset.label}: ${ctx.parsed.y}`;
+      }}}
+    },
+    scales: {
+      x: { grid: { color: GRID_COLOR }, ticks: { font: FONT } },
+      y: {
+        min: 0,
+        position: 'left',
+        grid: { color: GRID_COLOR },
+        ticks: { font: FONT },
+        title: { display: true, text: '需求数', font: FONT, color: '#9aa5b1' }
+      },
+      y1: {
+        min: 0, max: 30,
+        position: 'right',
+        grid: { drawOnChartArea: false },
+        ticks: { font: FONT, callback: v => v + '%' },
+        title: { display: true, text: '解决率', font: FONT, color: '#9aa5b1' }
+      }
+    }
+  }
+});
+
+// ── 3. 工单系统Bug月度趋势 ──
+new Chart(document.getElementById('workorderBugChart'), {
+  data: {
+    labels: LABELS,
+    datasets: [
+      {
+        type: 'bar',
+        label: 'Bug总数',
+        data: [649, 345, 494, 506, 537, 485],
+        backgroundColor: 'rgba(249,115,22,0.7)',
+        borderColor: '#f97316',
+        borderWidth: 1,
+        borderRadius: 4,
+        barThickness: 48,
+        yAxisID: 'y'
+      },
+      {
+        type: 'bar',
+        label: '未解决Bug',
+        data: [95, 40, 88, 96, 101, 190],
+        backgroundColor: 'rgba(253,186,116,0.75)',
+        borderColor: '#fdba74',
+        borderWidth: 1,
+        borderRadius: 4,
+        barThickness: 48,
+        yAxisID: 'y',
+        labelColor: '#ea580c'
+      },
+      {
+        type: 'line',
+        label: '解决率',
+        data: [85.4, 88.4, 82.2, 81.0, 81.2, 60.8],
+        borderColor: '#10b981',
+        backgroundColor: 'rgba(16,185,129,0.08)',
+        borderWidth: 2.5,
+        pointRadius: 5,
+        pointBackgroundColor: '#10b981',
+        tension: 0.35,
+        yAxisID: 'y1',
+        labelFormat: 'percent',
+        labelColor: '#059669'
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'top', labels: { font: FONT, boxWidth: 12, padding: 14 } },
+      tooltip: { callbacks: { label: ctx => {
+        if (ctx.dataset.labelFormat === 'percent') return ` ${ctx.dataset.label}: ${ctx.parsed.y}%`;
+        return ` ${ctx.dataset.label}: ${ctx.parsed.y}`;
+      }}}
+    },
+    scales: {
+      x: { grid: { color: GRID_COLOR }, ticks: { font: FONT } },
+      y: {
+        min: 0,
+        position: 'left',
+        grid: { color: GRID_COLOR },
+        ticks: { font: FONT },
+        title: { display: true, text: 'Bug数', font: FONT, color: '#9aa5b1' }
+      },
+      y1: {
+        min: 0, max: 100,
+        position: 'right',
+        grid: { drawOnChartArea: false },
+        ticks: { font: FONT, callback: v => v + '%' },
+        title: { display: true, text: '解决率', font: FONT, color: '#9aa5b1' }
+      }
+    }
+  }
+});
+
+// ── 4. 禅道Bug月度趋势 ──
+new Chart(document.getElementById('bugChart'), {
+  data: {
+    labels: LABELS,
+    datasets: [
+      {
+        type: 'bar',
+        label: 'Bug总数',
+        data: [810, 616, 757, 778, 741, 751],
+        backgroundColor: 'rgba(239,68,68,0.7)',
+        borderColor: '#ef4444',
+        borderWidth: 1,
+        borderRadius: 4,
+        barThickness: 48,
+        yAxisID: 'y'
+      },
+      {
+        type: 'bar',
+        label: '未解决Bug',
+        data: [56, 88, 104, 109, 108, 179],
+        backgroundColor: 'rgba(252,165,165,0.75)',
+        borderColor: '#fca5a5',
+        borderWidth: 1,
+        borderRadius: 4,
+        barThickness: 48,
+        yAxisID: 'y',
+        labelColor: '#dc2626'
+      },
+      {
+        type: 'line',
+        label: '解决率',
+        data: [93.1, 85.7, 86.3, 86.0, 85.4, 76.2],
+        borderColor: '#10b981',
+        backgroundColor: 'rgba(16,185,129,0.08)',
+        borderWidth: 2.5,
+        pointRadius: 5,
+        pointBackgroundColor: '#10b981',
+        tension: 0.35,
+        yAxisID: 'y1',
+        labelFormat: 'percent',
+        labelColor: '#059669'
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'top', labels: { font: FONT, boxWidth: 12, padding: 14 } },
+      tooltip: { callbacks: { label: ctx => {
+        if (ctx.dataset.labelFormat === 'percent') return ` ${ctx.dataset.label}: ${ctx.parsed.y}%`;
+        return ` ${ctx.dataset.label}: ${ctx.parsed.y}`;
+      }}}
+    },
+    scales: {
+      x: { grid: { color: GRID_COLOR }, ticks: { font: FONT } },
+      y: {
+        min: 0,
+        position: 'left',
+        grid: { color: GRID_COLOR },
+        ticks: { font: FONT },
+        title: { display: true, text: 'Bug数', font: FONT, color: '#9aa5b1' }
+      },
+      y1: {
+        min: 70, max: 100,
+        position: 'right',
+        grid: { drawOnChartArea: false },
+        ticks: { font: FONT, callback: v => v + '%' },
+        title: { display: true, text: '解决率', font: FONT, color: '#9aa5b1' }
+      }
+    }
+  }
+});
+
+// ── 5. 工单系统4天解决率 ──
+new Chart(document.getElementById('rate4dChart'), {
+  type: 'line',
+  data: {
+    labels: LABELS,
+    datasets: [{
+      label: '4天解决率',
+      data: [65.4, 69.9, 70.7, 77.7, 81.7, 76.9],
+      borderColor: '#3b82f6',
+      backgroundColor: 'rgba(59,130,246,0.10)',
+      borderWidth: 2.5,
+      pointRadius: 5,
+      pointBackgroundColor: '#3b82f6',
+      tension: 0.35,
+      fill: true,
+      labelFormat: 'percent',
+      labelColor: '#2563eb'
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y}%` } }
+    },
+    scales: {
+      x: { grid: { color: GRID_COLOR }, ticks: { font: FONT } },
+      y: {
+        min: 50, max: 100,
+        grid: { color: GRID_COLOR },
+        ticks: { font: FONT, callback: v => v + '%' },
+        title: { display: true, text: '解决率', font: FONT, color: '#9aa5b1' }
+      }
+    }
+  }
+});
+
+// ── 6. 禅道Bug 4天解决率 ──
+new Chart(document.getElementById('bugRate4dChart'), {
+  type: 'line',
+  data: {
+    labels: LABELS,
+    datasets: [{
+      label: 'Bug 4天解决率',
+      data: [66.0, 53.9, 45.6, 53.2, 58.2, 53.9],
+      borderColor: '#f59e0b',
+      backgroundColor: 'rgba(245,158,11,0.10)',
+      borderWidth: 2.5,
+      pointRadius: 5,
+      pointBackgroundColor: '#f59e0b',
+      tension: 0.35,
+      fill: true,
+      labelFormat: 'percent',
+      labelColor: '#d97706'
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y}%` } }
+    },
+    scales: {
+      x: { grid: { color: GRID_COLOR }, ticks: { font: FONT } },
+      y: {
+        min: 30, max: 80,
+        grid: { color: GRID_COLOR },
+        ticks: { font: FONT, callback: v => v + '%' },
+        title: { display: true, text: '解决率', font: FONT, color: '#9aa5b1' }
+      }
+    }
+  }
+});
+
+// ── 7. 产研3天答复率 ──
+new Chart(document.getElementById('reply3dChart'), {
+  type: 'line',
+  data: {
+    labels: LABELS,
+    datasets: [{
+      label: '产研3天答复率',
+      data: [47.0, 46.9, 40.8, 41.6, 48.2, 42.3],
+      borderColor: '#8b5cf6',
+      backgroundColor: 'rgba(139,92,246,0.10)',
+      borderWidth: 2.5,
+      pointRadius: 5,
+      pointBackgroundColor: '#8b5cf6',
+      tension: 0.35,
+      fill: true,
+      labelFormat: 'percent',
+      labelColor: '#7c3aed'
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y}%` } }
+    },
+    scales: {
+      x: { grid: { color: GRID_COLOR }, ticks: { font: FONT } },
+      y: {
+        min: 25, max: 70,
+        grid: { color: GRID_COLOR },
+        ticks: { font: FONT, callback: v => v + '%' },
+        title: { display: true, text: '答复率', font: FONT, color: '#9aa5b1' }
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>H1 工单响应时效达标率统计报告</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; background: #f5f7fa; color: #333; }
+.header { background: linear-gradient(135deg, #1a73e8, #0d47a1); color: #fff; padding: 28px 40px; text-align: center; }
+.header h1 { font-size: 26px; font-weight: 600; margin-bottom: 6px; }
+.header p { font-size: 14px; opacity: 0.85; }
+.container { max-width: 1280px; margin: 0 auto; padding: 24px 20px; }
+.summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
+.card { background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); text-align: center; }
+.card .label { font-size: 13px; color: #888; margin-bottom: 8px; }
+.card .value { font-size: 28px; font-weight: 700; }
+.card .sub { font-size: 12px; color: #aaa; margin-top: 4px; }
+.chart-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+.chart-full { margin-bottom: 20px; }
+.chart-box { background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.chart-box h3 { font-size: 16px; font-weight: 600; color: #333; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid #eee; }
+.chart { width: 100%; height: 380px; }
+.chart-tall { height: 440px; }
+.footer { text-align: center; padding: 16px; font-size: 12px; color: #aaa; }
+.c-blue { color: #1a73e8; }
+.c-green { color: #4caf50; }
+.c-red { color: #ef4444; }
+.c-orange { color: #ff9800; }
+
+@media (max-width: 768px) {
+  .summary { grid-template-columns: repeat(2, 1fr); }
+  .chart-row { grid-template-columns: 1fr; }
+  .header { padding: 20px 24px; }
+  .container { padding: 12px; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>H1 工单响应时效达标率统计报告</h1>
+  <p>数据范围：2026年上半年 | 数据来源：工单系统、禅道</p>
+</div>
+
+<div class="container">
+  <div class="summary">
+    <div class="card">
+      <div class="label">总工单数</div>
+      <div class="value c-blue">4,851</div>
+      <div class="sub">P1~P4 全部工单</div>
+    </div>
+    <div class="card">
+      <div class="label">整体达标率</div>
+      <div class="value c-green">84.64%</div>
+      <div class="sub">达标数 4,106</div>
+    </div>
+    <div class="card">
+      <div class="label">未达标数</div>
+      <div class="value c-red">745</div>
+      <div class="sub">占总量 15.36%</div>
+    </div>
+  </div>
+
+  <div class="chart-row">
+    <div class="chart-box">
+      <h3>各优先级达标率对比</h3>
+      <div id="chart1" class="chart"></div>
+    </div>
+    <div class="chart-box">
+      <h3>各优先级工单量分布（达标 vs 未达标）</h3>
+      <div id="chart2" class="chart"></div>
+    </div>
+  </div>
+
+  <div class="chart-row">
+    <div class="chart-box">
+      <h3>整体达标率占比</h3>
+      <div id="chart3" class="chart"></div>
+    </div>
+    <div class="chart-box">
+      <h3>各优先级未达标工单分布</h3>
+      <div id="chart4" class="chart"></div>
+    </div>
+  </div>
+
+  <div class="chart-full chart-box">
+    <h3>各优先级工单数量与响应时效阈值概览</h3>
+    <div id="chart5" class="chart chart-tall"></div>
+  </div>
+</div>
+
+<div class="footer">
+  数据来源：工单系统、禅道 | 处理人：朱迪峰、何春盛、何汉德、张秋菊、曾婧、肖锐、陈北春、赵正文
+</div>
+
+<script>
+var colorBlue = '#1a73e8';
+var colorGreen = '#4caf50';
+var colorRed = '#ef4444';
+var colorOrange = '#ff9800';
+var colorPurple = '#7c3aed';
+
+// Chart 1: 各优先级达标率柱状图
+(function() {
+  var c = echarts.init(document.getElementById('chart1'));
+  c.setOption({
+    tooltip: {
+      trigger: 'axis',
+      formatter: function(p) {
+        return p[0].name + '<br/>达标率：<b>' + (p[0].value * 100).toFixed(2) + '%</b>';
+      }
+    },
+    grid: { left: '8%', right: '8%', top: '8%', bottom: '8%' },
+    xAxis: {
+      type: 'category',
+      data: ['P1', 'P2', 'P3', 'P4', '合计'],
+      axisLabel: { fontSize: 13, fontWeight: 600 }
+    },
+    yAxis: {
+      type: 'value',
+      min: 0,
+      max: 1.10,
+      axisLabel: { formatter: '{value}%', fontSize: 12 },
+      axisLine: { show: true }
+    },
+    series: [{
+      type: 'bar',
+      data: [
+        { value: 0.6883, itemStyle: { color: '#ef4444' } },
+        { value: 0.8567, itemStyle: { color: '#ff9800' } },
+        { value: 0.8744, itemStyle: { color: '#1a73e8' } },
+        { value: 1.0, itemStyle: { color: '#4caf50' } },
+        { value: 0.8464, itemStyle: { color: '#7c3aed' } }
+      ],
+      label: {
+        show: true,
+        position: 'top',
+        formatter: '{c}',
+        fontSize: 13,
+        fontWeight: 600,
+        color: '#333'
+      },
+      barWidth: '50%',
+      itemStyle: { borderRadius: [6, 6, 0, 0] },
+      markLine: {
+        silent: true,
+        data: [{ yAxis: 0.9, label: { formatter: '90% 目标线' }, lineStyle: { color: '#999', type: 'dashed' } }]
+      }
+    }]
+  });
+})();
+
+// Chart 2: 达标/未达标 堆叠柱状图
+(function() {
+  var c = echarts.init(document.getElementById('chart2'));
+  c.setOption({
+    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+    legend: { bottom: 0, textStyle: { fontSize: 12 } },
+    grid: { left: '8%', right: '8%', top: '8%', bottom: '12%' },
+    xAxis: {
+      type: 'category',
+      data: ['P1 (< 8h)', 'P2 (< 48h)', 'P3 (< 72h)', 'P4 (< 72h)'],
+      axisLabel: { fontSize: 12 }
+    },
+    yAxis: { type: 'value', axisLabel: { fontSize: 12 } },
+    series: [
+      {
+        name: '达标',
+        type: 'bar',
+        stack: 'total',
+        data: [254, 3271, 578, 3],
+        itemStyle: { color: '#4caf50', borderRadius: [0, 0, 0, 0] },
+        label: { show: true, position: 'inside', fontSize: 12, fontWeight: 600, color: '#fff' }
+      },
+      {
+        name: '未达标',
+        type: 'bar',
+        stack: 'total',
+        data: [115, 547, 83, 0],
+        itemStyle: { color: '#ef4444', borderRadius: [6, 6, 0, 0] },
+        label: { show: true, position: 'inside', fontSize: 12, fontWeight: 600, color: '#fff' }
+      }
+    ]
+  });
+})();
+
+// Chart 3: 整体达标率饼图
+(function() {
+  var c = echarts.init(document.getElementById('chart3'));
+  c.setOption({
+    tooltip: { trigger: 'item', formatter: '{b}: {c} ({d}%)' },
+    legend: { bottom: 0, textStyle: { fontSize: 12 } },
+    series: [{
+      type: 'pie',
+      radius: ['50%', '75%'],
+      center: ['50%', '48%'],
+      avoidLabelOverlap: false,
+      itemStyle: { borderRadius: 8, borderColor: '#fff', borderWidth: 3 },
+      label: { show: true, position: 'outside', formatter: '{b}\n{d}%', fontSize: 13, fontWeight: 600 },
+      emphasis: { label: { fontSize: 18, fontWeight: 'bold' } },
+      data: [
+        { value: 4106, name: '达标', itemStyle: { color: '#4caf50' } },
+        { value: 745, name: '未达标', itemStyle: { color: '#ef4444' } }
+      ]
+    }]
+  });
+})();
+
+// Chart 4: 各优先级未达标分布玫瑰图
+(function() {
+  var c = echarts.init(document.getElementById('chart4'));
+  c.setOption({
+    tooltip: { trigger: 'item', formatter: '{b}: {c} 单 ({d}%)' },
+    legend: { bottom: 0, textStyle: { fontSize: 12 } },
+    series: [{
+      type: 'pie',
+      radius: ['30%', '70%'],
+      center: ['50%', '48%'],
+      roseType: 'area',
+      itemStyle: { borderRadius: 6, borderColor: '#fff', borderWidth: 2 },
+      label: { fontSize: 12, formatter: '{b}\n{c} 单' },
+      data: [
+        { value: 115, name: 'P1（紧急）', itemStyle: { color: '#d32f2f' } },
+        { value: 547, name: 'P2（高）', itemStyle: { color: '#ef5350' } },
+        { value: 83, name: 'P3（中）', itemStyle: { color: '#ff9800' } },
+        { value: 0, name: 'P4（低）', itemStyle: { color: '#4caf50' } }
+      ]
+    }]
+  });
+})();
+
+// Chart 5: 综合概览 — 条形图 + 阈值信息
+(function() {
+  var c = echarts.init(document.getElementById('chart5'));
+  var priorities = ['P1', 'P2', 'P3', 'P4'];
+  var thresholds = ['< 8小时（自然日）', '< 48小时（工作日）', '< 72小时（工作日）', '< 72小时（工作日）'];
+  var totals = [369, 3818, 661, 3];
+  var qualified = [254, 3271, 578, 3];
+  var unqualified = [115, 547, 83, 0];
+  var rates = [68.83, 85.67, 87.44, 100.0];
+
+  c.setOption({
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: { type: 'shadow' },
+      formatter: function(params) {
+        var i = params[0].dataIndex;
+        return '<b>' + priorities[i] + '</b> 响应阈值：' + thresholds[i] +
+          '<br/>总记录：' + totals[i] +
+          '<br/>达标：' + qualified[i] + ' | 未达标：' + unqualified[i] +
+          '<br/>达标率：<b>' + rates[i] + '%</b>';
+      }
+    },
+    legend: {
+      data: ['总记录数', '达标', '未达标', '达标率'],
+      bottom: 0,
+      textStyle: { fontSize: 12 }
+    },
+    grid: { left: '5%', right: '5%', top: '8%', bottom: '12%' },
+    xAxis: {
+      type: 'category',
+      data: priorities.map(function(p, i) { return p + '\n' + thresholds[i]; }),
+      axisLabel: { fontSize: 11, interval: 0 }
+    },
+    yAxis: [
+      {
+        type: 'value',
+        name: '工单数',
+        axisLabel: { fontSize: 12 },
+        splitLine: { lineStyle: { type: 'dashed' } }
+      },
+      {
+        type: 'value',
+        name: '达标率 (%)',
+        min: 0, max: 110,
+        axisLabel: { formatter: '{value}%', fontSize: 12 }
+      }
+    ],
+    series: [
+      {
+        name: '总记录数',
+        type: 'bar',
+        data: totals,
+        itemStyle: { color: '#90caf9', borderRadius: [6, 6, 0, 0] },
+        barGap: '5%',
+        label: { show: true, position: 'inside', fontSize: 12, fontWeight: 600 }
+      },
+      {
+        name: '达标',
+        type: 'bar',
+        data: qualified,
+        itemStyle: { color: '#4caf50', borderRadius: [6, 6, 0, 0] },
+        label: { show: true, position: 'inside', fontSize: 12, fontWeight: 600, color: '#fff' }
+      },
+      {
+        name: '未达标',
+        type: 'bar',
+        data: unqualified,
+        itemStyle: { color: '#ef4444', borderRadius: [6, 6, 0, 0] },
+        label: { show: true, position: 'inside', fontSize: 12, fontWeight: 600, color: '#fff' }
+      },
+      {
+        name: '达标率',
+        type: 'line',
+        yAxisIndex: 1,
+        data: rates,
+        lineStyle: { color: '#7c3aed', width: 3 },
+        itemStyle: { color: '#7c3aed', borderWidth: 2, borderColor: '#fff' },
+        symbol: 'circle',
+        symbolSize: 10,
+        label: { show: true, formatter: '{c}%', fontSize: 13, fontWeight: 700, color: '#7c3aed', position: 'top', distance: 16 },
+        markLine: {
+          silent: true,
+          symbol: 'none',
+          data: [{ yAxis: 90, label: { formatter: '90% 目标' }, lineStyle: { color: '#999', type: 'dashed' } }]
+        }
+      }
+    ]
+  });
+})();
+
+window.addEventListener('resize', function() {
+  ['chart1','chart2','chart3','chart4','chart5'].forEach(function(id) {
+    var dom = document.getElementById(id);
+    if (dom) {
+      var inst = echarts.getInstanceByDom(dom);
+      if (inst) inst.resize();
+    }
+  });
+});
+</script>
+</body>
+</html>
